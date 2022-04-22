@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import play from '../playground'
+import { play2 } from '../playground'
 
 
 const message: string = 'Hello World'
@@ -8,7 +8,7 @@ const message: string = 'Hello World'
 const Home: NextPage = () => {
 
   useEffect(() => {
-    play()
+    play2()
   }, [])
 
   return (

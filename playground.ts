@@ -1,5 +1,3 @@
-
-
 // interface Person {
 //   name: string;
 //   age: number;
@@ -148,94 +146,159 @@
 //   // logHumanInfo(someone)
 //   // betterThanAny(object)
 //   printInfo(object)
+// }
 
 ////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
 
-interface RaceBicycle {
-  name: string;
-  speed: 60;
-  type: 'race bicycle'
-}
+/*------------------------------------------------------------------------*/
 
-interface CruiseBicycle {
-  name: string;
-  material: string;
-  speed: number;
-  type: 'cruise bicycle'
-}
+// Generics
 
-interface MountainBicycle {
-  name: string
-  material: string
-  speed: number
-  type: 'mountain bicycle'
-}
+// class Logger<T> {
+//   log(items: Array<T>, callback: (i: T) => void){
+//     items.forEach((item) => {
+//       callback(item)
+//     })
+//   }
+// }
 
-type Bicycle = RaceBicycle | CruiseBicycle 
+// interface Person {
+//   name: string;
+//   age: number;
+// }
 
-const bike: RaceBicycle = {
-  name: 'Haro',
-  speed: 60,
-  type: 'race bicycle'
-}
+export function play2(){
 
-const bike2: CruiseBicycle = {
-  name: 'Cruiser',
-  speed: 50,
-  material: 'metal',
-  type: 'cruise bicycle'
-}
+  // Specify the generic type when instantiating the new instance of the class function.
 
-const bike3: MountainBicycle = {
-  name: 'Mountain Power',
-  speed: 75,
-  material: 'Aluminum',
-  type: 'mountain bicycle'
-}
+  /*--------- Level 1 -----------*/
+
+//   const logger = new Logger<string>()
+
+//   const cars = ['Skoda', 'BMW', 'Porshe', 'VW']
+
+//   logger.log(cars, (car) => {
+//     console.log(car)
+//   })
+
+//   const logger2 = new Logger<number>()
+
+//   const data = [1,2,3,4]
+
+//   logger2.log(data, (dat) => {
+//     console.log(dat)
+//   } )
+
+//   const person = [
+//     {
+//     name: "Jon",
+//     age: 39
+//   }, {
+//     name: 'Jen',
+//     age: 29
+//   }
+// ]
+
+//   const personLogger = new Logger<Person>()
+
+//   personLogger.log(person, (i) => {
+//     console.log(i)
+//   })
+
+    //**TODODOTO--------- Level 2 -----------TODODOTO**/
+
+    // To make the Logger type have a default value use ' class Logger <T extends People = Student> 
+    // The Student type must satisfy constraints of People. Then you can omit declaring the type when instatiating the class.
+
+  // class Logger<T extends People>{
+  //   log(people: Array<T>, callback: (person: T) => void){
+  //     people.forEach((i) => callback(i))
+  //   }
+  // }
+
+  // interface People {
+  //   name: string
+  //   age: number
+  // }
+
+  // class Student implements People {
+  //   name = ''
+  //   age = 0
+  //   doctorate = false
+  // }
+
+  // class BusinessPerson implements People {
+  //   name = ''
+  //   age = 0
+  //   experienced = false
+  // }
+
+  // const students = [{name: 'John', age: 39, doctorate: false}, {name: 'Jen', age: 29, doctorate: true}]
+  // const businessPeople = [{name: 'Henry', age: 48, experienced: true}, {name: 'Joe', age: 23, experienced: false}]
+
+  // const studentLogger = new Logger<Student>()
+  // const businessLogger = new Logger<BusinessPerson>()
+
+  // studentLogger.log(students, (person) => {
+  //   console.log(person)
+  // })
+
+  // businessLogger.log(businessPeople, (person) => {
+  //   console.log(person.age)
+  // })
 
 
+  //TODOODOT-------- Level 2 again with type and interface -----------TODODODOT*/
 
-type BicycleLogger = (bike: Bicycle) => unknown
-type RandomFn = () => number
+  // interface Person {
+  //   name: string
+  //   age: number
+  // }
 
+  // interface Student extends Person {
+  //   scholarship: boolean
+  // }
 
-const play = () => {
+  // interface GraduateStudent extends Student {
+  //   projects: boolean
+  // }
 
-  function randomiserFn: RandomFn(){
-      const random = Math.random() * 100
-      return random
+  // // Set Students as the default for generic, can be over-ridden with another interface as above.
+
+  // type StudentInfo<T extends Student = Student> = {
+  //   data: T
+  //   grades: number[]
+  // }
+
+  // const info = {
+  //   data: {
+  //     name: 'John',
+  //     age: 39,
+  //     scholarship: true,
+  //     projects: true
+  //   },
+  //   grades: [1,2,3,4]
+  // }
+
+  // //Specifying the generic type over-rides the default
+  // function logStudentInfo(info: StudentInfo<GraduateStudent>): void{
+  //   console.log(info.data.scholarship)
+  // }
+
+  // logStudentInfo(info)
+
+  //TODO--------------- Custom types using Terniary Operator in TS ----------------TODO//
+
+  interface Person {
+    name: string
   }
 
-  randomiserFn()
+  type SingleType<T> = T extends any[] ? T[number] : unknown
 
-  
-  
-  function item(random: number){
-    if(random < 33){
-      return bike
-    } else if (random < 66 && random > 33){
-      return bike2
-    } else return bike3
-  }
+  // Custom types
+  type Type1 = SingleType<string[]>
+  type Type2 = SingleType<number[]>
+  // Person doesn't extend any because it's not an array, otherwise it would satisfy as any. 
+  type Type3 = SingleType<Person>
 
-  item(random)
-
-  
-  
-  const bicycleLogger: BicycleLogger = (bike: Bicycle) => {
-    switch(bike.type){
-      case 'cruise bicycle':
-        console.log(bike.name)
-      break;
-      case 'race bicycle':
-        console.log(bike.name)
-      break;
-      default:
-        return bike
-    }}
-
-  bicycleLogger(bike)
 }
-
-export default play
